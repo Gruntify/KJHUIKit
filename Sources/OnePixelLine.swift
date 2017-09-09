@@ -37,8 +37,8 @@ open class OnePixelLine: UIView {
     private func setupOnePixelLine() {
         
         // Hugging priority set high will prevent the line from being pulled into a thicker size because of its relationship to other views
-        setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
     }
 
     open override var intrinsicContentSize: CGSize {
