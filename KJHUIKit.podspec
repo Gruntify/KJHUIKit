@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KJHUIKit"
-  s.version      = "0.9"
+  s.version      = "0.9.1"
   s.summary      = "A handy set of views and buttons for iOS"
   s.homepage     = "https://github.com/KieranHarper/KJHUIKit.git"
   s.license      = { :type => "MIT", :file => "LICENSE" }
@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/KieranHarper/KJHUIKit.git", :tag => s.version.to_s }
   s.source_files  = "Sources/**/*"
   s.frameworks  = "Foundation"
-  s.dependency 'SnapKit', '~> 3.2'
+  s.dependency "SnapKit", "~> 3.2"
 end
