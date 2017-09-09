@@ -11,35 +11,35 @@ import UIKit
 
 
 /// Animator that implements ShowHideable with some default animations and curves
-public class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
+open class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
     
     
     
     // MARK: - Properties
     
     /// Curve to use when animating to the showing state
-    public var showCurve: AnimationCurve = .spring(damping: 0.7, initialVelocity: 0.0, duration: 0.3, additive: false)
+    open var showCurve: AnimationCurve = .spring(damping: 0.7, initialVelocity: 0.0, duration: 0.3, additive: false)
     
     /// Curve to use when animating to the hidden state
-    public var hideCurve: AnimationCurve = .spring(damping: 0.7, initialVelocity: 0.0, duration: 0.3, additive: false)
+    open var hideCurve: AnimationCurve = .spring(damping: 0.7, initialVelocity: 0.0, duration: 0.3, additive: false)
     
     /// Alpha value to set when in the showing state
-    public var showAlpha: CGFloat = 1.0
+    open var showAlpha: CGFloat = 1.0
     
     /// Alpha value to set when in the hidden state
-    public var hideAlpha: CGFloat = 0.0
+    open var hideAlpha: CGFloat = 0.0
     
     /// Transform to apply when in the showing state
-    public var showTransform = CGAffineTransform.identity
+    open var showTransform = CGAffineTransform.identity
     
     /// Transform to apply when in the hidden state
-    public var hideTransform = CGAffineTransform(scaleX: AnimationConstants.zeroScale, y: AnimationConstants.zeroScale)
+    open var hideTransform = CGAffineTransform(scaleX: AnimationConstants.zeroScale, y: AnimationConstants.zeroScale)
     
     
     
     // MARK: - Private variables
     
-    public private(set) weak var target: T?
+    open private(set) weak var target: T?
     
     
     
@@ -51,7 +51,7 @@ public class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
         self.target = target
     }
     
-    public func cancel() {
+    open func cancel() {
         // (nothing special to do)
     }
     
@@ -59,12 +59,12 @@ public class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
     
     // MARK: - ShowHideable
     
-    public var isShowing: Bool {
+    open var isShowing: Bool {
         guard let target = self.target else { return false }
         return !target.isHidden && target.alpha > hideAlpha
     }
     
-    public func show(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    open func show(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
         guard let target = self.target else {
             completion?()
             return
@@ -96,7 +96,7 @@ public class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
         }
     }
     
-    public func hide(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    open func hide(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
         guard let target = self.target else {
             completion?()
             return
@@ -134,28 +134,28 @@ public class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
 /** A pulse animation that scales a view to an extent and then brings it back to normal.
  This is implemented as a 2 step animation, which is controlled by properties related to either "firstStage" or "secondStage".
  */
-public class BouncePulseAnimator: Animator, Pulseable {
+open class BouncePulseAnimator: Animator, Pulseable {
     
     
     // MARK: - Properties
     
     /// Curve to apply for the initial part of the 2 stage animation.
-    public var firstStageCurve: AnimationCurve = .easing(curve: .easeOut, duration: 0.15, additive: true)
+    open var firstStageCurve: AnimationCurve = .easing(curve: .easeOut, duration: 0.15, additive: true)
     
     /// Curve to apply for the final part of the 2 stage animation.
-    public var secondStageCurve: AnimationCurve = .spring(damping: 0.4, initialVelocity: 0.0, duration: 0.5, additive: true)
+    open var secondStageCurve: AnimationCurve = .spring(damping: 0.4, initialVelocity: 0.0, duration: 0.5, additive: true)
     
     /// Amount to either grow or shrink the target size.
-    public var scale: CGFloat = 1.1
+    open var scale: CGFloat = 1.1
     
     /// The rules about how the first stage should be interrupted by the second stage. Tweaking this may help make the 2 animations feel like 1.
-    public var firstStagePlayoutBehaviour: AnimationPlayoutBehaviour = .full
+    open var firstStagePlayoutBehaviour: AnimationPlayoutBehaviour = .full
     
     
     
     // MARK: - Private variables
     
-    public private(set) weak var target: UIView?
+    open private(set) weak var target: UIView?
     private var _shouldStop = false
     
     
@@ -168,7 +168,7 @@ public class BouncePulseAnimator: Animator, Pulseable {
         self.target = target
     }
     
-    public func cancel() {
+    open func cancel() {
         _shouldStop = true
     }
     
@@ -176,7 +176,7 @@ public class BouncePulseAnimator: Animator, Pulseable {
     
     // MARK: - Pulseable
     
-    public func pulse(completion: (() -> ())? = nil) {
+    open func pulse(completion: (() -> ())? = nil) {
         guard let target = self.target else {
             completion?()
             return
@@ -227,32 +227,32 @@ public class BouncePulseAnimator: Animator, Pulseable {
 
 
 /// Animation for a type of breathing where the view repeatedly grows and shrinks
-public class BounceDownUpBreatheAnimator: Animator, Breathable {
+open class BounceDownUpBreatheAnimator: Animator, Breathable {
     
     
     
     // MARK: - Properties
     
     /// The amount to grow the target by when breathing "up".
-    public var growthFactor: CGFloat = 1.07
+    open var growthFactor: CGFloat = 1.07
     
     /// The amount to shrink the target by when breathing "down".
-    public var shrinkFactor: CGFloat = 0.93
+    open var shrinkFactor: CGFloat = 0.93
     
     /// Whether or not to start the cycle via the grow/up stage.
-    public var startWithGrowth = false
+    open var startWithGrowth = false
     
     /// The curve to apply when running the "up" animation.
-    public var scaleUpAnimationCurve: AnimationCurve = .easing(curve: .easeInOut, duration: 1.75, additive: true)
+    open var scaleUpAnimationCurve: AnimationCurve = .easing(curve: .easeInOut, duration: 1.75, additive: true)
     
     /// The curve to apply when running the "down" animation.
-    public var scaleDownAnimationCurve: AnimationCurve = .easing(curve: .easeInOut, duration: 1.75, additive: true)
+    open var scaleDownAnimationCurve: AnimationCurve = .easing(curve: .easeInOut, duration: 1.75, additive: true)
     
     
     
     // MARK: - Private variables
     
-    public private(set) weak var target: UIView?
+    open private(set) weak var target: UIView?
     private var _isUp = false
     private var _breatheUpConfig: AnimationConfig<UIView>!
     private var _breatheDownConfig: AnimationConfig<UIView>!
@@ -267,7 +267,7 @@ public class BounceDownUpBreatheAnimator: Animator, Breathable {
         self.target = target
     }
     
-    public func cancel() {
+    open func cancel() {
         stopBreathing()
     }
     
@@ -276,10 +276,10 @@ public class BounceDownUpBreatheAnimator: Animator, Breathable {
     // MARK: - Breathable
     
     /// Whether or not the view is currently breathing
-    public private(set) var isBreathing = false
+    open private(set) var isBreathing = false
     
     /// Start the breathing animations
-    public func startBreathing() {
+    open func startBreathing() {
         guard !isBreathing else { return }
         isBreathing = true
         setupConfigs()
@@ -287,7 +287,7 @@ public class BounceDownUpBreatheAnimator: Animator, Breathable {
     }
     
     /// Stop the breathing animations
-    public func stopBreathing() {
+    open func stopBreathing() {
         guard isBreathing else { return }
         isBreathing = false
         
@@ -345,14 +345,14 @@ public class BounceDownUpBreatheAnimator: Animator, Breathable {
  
  NOTE: This breaks the animator guidelines because the actual animation being done is undefined / needs to be provided, but it's more handy to have this be an animator rather than wrapped up as helper of some sort.
  */
-public class TapDownUpAnimator<T: UIView>: Animator {
+open class TapDownUpAnimator<T: UIView>: Animator {
     
     
     
     // MARK: - Private variables
     
     public typealias TargetType = T // (for Animator)
-    public private(set) weak var target: T?
+    open private(set) weak var target: T?
     
     private var _tapDownState: AnimationConfig<T>?
     private var _tapUpState: AnimationConfig<T>?
@@ -377,7 +377,7 @@ public class TapDownUpAnimator<T: UIView>: Animator {
         self.target = target
     }
     
-    public func cancel() {
+    open func cancel() {
         preventDelayedTapUpAnimationIfApplicable()
     }
     
@@ -391,41 +391,41 @@ public class TapDownUpAnimator<T: UIView>: Animator {
     // MARK: - Public methods
     
     /// The rules about how tap down animations should be interrupted by tap up animation.
-    public var tapDownAnimationPlayoutBehaviour: AnimationPlayoutBehaviour = .full
+    open var tapDownAnimationPlayoutBehaviour: AnimationPlayoutBehaviour = .full
     
-    public func animateOnTapDown(with curve: AnimationCurve, animations: @escaping ViewAnimation<T>) {
+    open func animateOnTapDown(with curve: AnimationCurve, animations: @escaping ViewAnimation<T>) {
         _tapDownState = AnimationConfig(curve: curve, animations: animations)
     }
     
-    public func animateOnTapUp(with curve: AnimationCurve, animations: @escaping ViewAnimation<T>) {
+    open func animateOnTapUp(with curve: AnimationCurve, animations: @escaping ViewAnimation<T>) {
         _tapUpState = AnimationConfig(curve: curve, animations: animations)
     }
     
-    public func addSecondaryAnimationOnTapDown(with curve: AnimationCurve, animations: @escaping ViewAnimation<T>) {
+    open func addSecondaryAnimationOnTapDown(with curve: AnimationCurve, animations: @escaping ViewAnimation<T>) {
         _secondaryTapDownStates.append(AnimationConfig(curve: curve, animations: animations))
     }
     
-    public func addSecondaryAnimationOnTapUp(with curve: AnimationCurve, animations: @escaping ViewAnimation<T>) {
+    open func addSecondaryAnimationOnTapUp(with curve: AnimationCurve, animations: @escaping ViewAnimation<T>) {
         _secondaryTapUpStates.append(AnimationConfig(curve: curve, animations: animations))
     }
     
-    public func beforeTapDownAnimation(do closure: @escaping ()->()) {
+    open func beforeTapDownAnimation(do closure: @escaping ()->()) {
         _beforeTapDown = closure
     }
     
-    public func beforeTapUpAnimation(do closure: @escaping ()->()) {
+    open func beforeTapUpAnimation(do closure: @escaping ()->()) {
         _beforeTapUp = closure
     }
     
-    public func afterTapDownAnimation(do closure: @escaping ()->()) {
+    open func afterTapDownAnimation(do closure: @escaping ()->()) {
         _afterTapDown = closure
     }
     
-    public func afterTapUpAnimation(do closure: @escaping ()->()) {
+    open func afterTapUpAnimation(do closure: @escaping ()->()) {
         _afterTapUp = closure
     }
     
-    public func doTapDownAnimation() {
+    open func doTapDownAnimation() {
         guard !_tapDownAnimationRunning, let target = self.target else { return }
         _beforeTapDown?()
         preventDelayedTapUpAnimationIfApplicable()
@@ -450,7 +450,7 @@ public class TapDownUpAnimator<T: UIView>: Animator {
         }
     }
     
-    @objc public func doTapUpAnimation() {
+    @objc open func doTapUpAnimation() {
         preventDelayedTapUpAnimationIfApplicable()
         guard let animationConfig = _tapUpState else { return }
         

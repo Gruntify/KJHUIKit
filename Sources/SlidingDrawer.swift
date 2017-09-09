@@ -103,9 +103,9 @@ open class SlidingDrawer: UIView, ShowHideable {
     
     // MARK: - ShowHideable
     
-    public private(set) var isShowing: Bool = true
+    open private(set) var isShowing: Bool = true
     
-    public func show(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    open func show(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
         
         // Define animation work
         isShowing = true
@@ -127,7 +127,7 @@ open class SlidingDrawer: UIView, ShowHideable {
         }
     }
     
-    public func hide(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    open func hide(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
         
         // Define animation work
         isShowing = false

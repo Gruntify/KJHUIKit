@@ -89,48 +89,6 @@ open class Button: UIControl {
     
     // MARK: - Animation control
     
-//    private var _tapAnimationHelper: TapDownUpAnimationHelper<Button>!
-//    
-//    /// Set the animation that will run on tap down (NOTE: this overrides any previous setting)
-//    public func animateOnTapDown(with curve: AnimationCurve, animations: @escaping ViewAnimation<Button>) {
-//        _tapAnimationHelper.animateOnTapDown(with: curve, animations: animations)
-//    }
-//    
-//    /// Set the animation that will run on tap up (NOTE: this overrides any previous setting)
-//    public func animateOnTapUp(with curve: AnimationCurve, animations: @escaping ViewAnimation<Button>) {
-//        _tapAnimationHelper.animateOnTapUp(with: curve, animations: animations)
-//    }
-//    
-//    /// Add any number of secondary tap down animations that trigger alongside the primary animation but run with different curves
-//    public func addSecondaryAnimationOnTapDown(with curve: AnimationCurve, animations: @escaping ViewAnimation<Button>) {
-//        _tapAnimationHelper.addSecondaryAnimationOnTapDown(with: curve, animations: animations)
-//    }
-//    
-//    /// Add any number of secondary tap up animations that trigger alongside the primary animation but run with different curves
-//    public func addSecondaryAnimationOnTapUp(with curve: AnimationCurve, animations: @escaping ViewAnimation<Button>) {
-//        _tapAnimationHelper.addSecondaryAnimationOnTapUp(with: curve, animations: animations)
-//    }
-//    
-//    /// Set a closure to run just before tap down animations run
-//    public func beforeTapDownAnimation(do closure: @escaping ()->()) {
-//        _tapAnimationHelper.beforeTapDownAnimation(do: closure)
-//    }
-//    
-//    /// Set a closure to run just before tap up animations run
-//    public func beforeTapUpAnimation(do closure: @escaping ()->()) {
-//        _tapAnimationHelper.beforeTapUpAnimation(do: closure)
-//    }
-//    
-//    /// Set a closure to run just after tap down animations run
-//    public func afterTapDownAnimation(do closure: @escaping ()->()) {
-//        _tapAnimationHelper.afterTapDownAnimation(do: closure)
-//    }
-//    
-//    /// Set a closure to run just after tap up animations run
-//    public func afterTapUpAnimation(do closure: @escaping ()->()) {
-//        _tapAnimationHelper.afterTapUpAnimation(do: closure)
-//    }
-    
     public override func stopAnimations() {
         tapAnimator?.cancel()
         super.stopAnimations()

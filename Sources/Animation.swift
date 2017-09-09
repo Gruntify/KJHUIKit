@@ -23,7 +23,7 @@ public enum AnimationCurve {
 public struct AnimationConstants {
     
     /// Zero for the purposes of animating a transform scale to zero without breaking the math
-    static let zeroScale: CGFloat = 0.0001
+    public static let zeroScale: CGFloat = 0.0001
 }
 
 
@@ -150,7 +150,7 @@ public protocol Animator {
 public extension UIView {
     
     /// Interrupt any running animations, forcing them to halt as they currently appear (rather than completing instantly or returning to their initial state)
-    func stopAnimations() {
+    public func stopAnimations() {
         
         if let presentation = self.layer.presentation() {
             
@@ -188,7 +188,7 @@ public extension UIView {
     }
     
     /// Apply the animations as set out in an animation config
-    func runAnimation<T: UIView>(_ animationConfig: AnimationConfig<T>, delay: TimeInterval = 0.0, completion: ((Bool)->())? = nil) {
+    public func runAnimation<T: UIView>(_ animationConfig: AnimationConfig<T>, delay: TimeInterval = 0.0, completion: ((Bool)->())? = nil) {
         guard let selfRef = self as? T else { return }
         let animations = {
             animationConfig.animations(selfRef)
