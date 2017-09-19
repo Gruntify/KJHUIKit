@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/KieranHarper/KJHUIKit.git", :tag => s.version.to_s }
   s.source_files  = "Sources/**/*"
   s.frameworks  = "Foundation"
-  s.dependency "SnapKit", "~> 3.2"
+  s.dependency "SnapKit"
 end
