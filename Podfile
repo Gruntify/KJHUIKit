@@ -5,5 +5,5 @@ use_frameworks!
 
 target 'KJHUIKit-iOS' do  
     platform :ios, '9.0'
-    pod 'SnapKit', :git => 'https://github.com/SnapKit/SnapKit.git', :branch => 'swift-4'
+    pod 'SnapKit', '~> 4.0.0'
 end
