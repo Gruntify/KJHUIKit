@@ -17,7 +17,7 @@ import UIKit
  4. Add the contents of the drawer to the contentView.
  5. Expect the contentView's size to be 1.5x the size parameter. The reason for that is to allow overflow room for the show animation in case you want to use a spring curve. If this wasn't the case, you'd see gaps at the bottom when showing fromBottom at the moment where it overshoots/bounces. Adjust your content's constraints accordingly.
  */
-open class SlidingDrawer: UIView, ShowHideable {
+@objc open class SlidingDrawer: UIView, ShowHideable {
 
     /// The directional options for which way a sliding drawer is going to show. The opposite occurs when hiding.
     public enum ShowDirection {
@@ -28,7 +28,7 @@ open class SlidingDrawer: UIView, ShowHideable {
     }
     
     /// View which is inside the drawer - this is where your content needs to be added.
-    public private(set) var contentView: UIView!
+    @objc public private(set) var contentView: UIView!
     
     /// The direction that the drawer will move when showing. The reverse plays out when it hides.
     public var direction: ShowDirection = .fromBottom {
@@ -38,7 +38,7 @@ open class SlidingDrawer: UIView, ShowHideable {
     }
     
     /// Size to use for the drawer's height or width. Expect the contentView's size to be 1.5x this value for animation overshoot reasons.
-    public var size: CGFloat = 44.0 {
+    @objc public var size: CGFloat = 44.0 {
         didSet {
             setupDrawerConstraints()
         }
@@ -54,17 +54,17 @@ open class SlidingDrawer: UIView, ShowHideable {
     
     // MARK: - Lifecycle
     
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupSlidingDrawer()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setupSlidingDrawer()
     }
     
-    public convenience init() {
+    @objc public convenience init() {
         self.init(frame: CGRect.zero)
     }
     
@@ -81,7 +81,7 @@ open class SlidingDrawer: UIView, ShowHideable {
         show(animate: false)
     }
     
-    open override var intrinsicContentSize: CGSize {
+    @objc open override var intrinsicContentSize: CGSize {
         switch direction {
         case .fromBottom, .fromTop:
             if isShowing {
@@ -103,9 +103,9 @@ open class SlidingDrawer: UIView, ShowHideable {
     
     // MARK: - ShowHideable
     
-    open private(set) var isShowing: Bool = true
+    @objc open private(set) var isShowing: Bool = true
     
-    open func show(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    @objc open func show(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
         
         // Define animation work
         isShowing = true
@@ -127,7 +127,7 @@ open class SlidingDrawer: UIView, ShowHideable {
         }
     }
     
-    open func hide(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    @objc open func hide(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
         
         // Define animation work
         isShowing = false

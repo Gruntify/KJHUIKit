@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class TapUpOutsideGestureRecognizer: UIGestureRecognizer {
+@objc public class TapUpOutsideGestureRecognizer: UIGestureRecognizer {
     
-    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+    @objc public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
         if let v = self.view, let touch = touches.first {
             let loc = touch.location(in: v)
             let hit = v.point(inside: loc, with: event)

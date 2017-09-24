@@ -13,11 +13,11 @@ public func onePixelInPoints() -> CGFloat {
 }
 
 @IBDesignable
-open class OnePixelLine: UIView {
+@objc open class OnePixelLine: UIView {
 
     // MARK: - Lifecycle
     
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupOnePixelLine()
         
@@ -25,12 +25,12 @@ open class OnePixelLine: UIView {
         backgroundColor = UIColor.white
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setupOnePixelLine()
     }
     
-    public convenience init() {
+    @objc public convenience init() {
         self.init(frame: CGRect.zero)
     }
     
@@ -41,7 +41,7 @@ open class OnePixelLine: UIView {
         setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
     }
 
-    open override var intrinsicContentSize: CGSize {
+    @objc open override var intrinsicContentSize: CGSize {
         let points = onePixelInPoints()
         return CGSize(width: points, height: points)
     }

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 /// Simple label only button
-open class LabelButton: Button {
+@objc open class LabelButton: Button {
     
     
     // MARK: - Properties
@@ -18,14 +18,14 @@ open class LabelButton: Button {
     /**
      The label that is centered inside the button. Alignment is centered by default.
      */
-    public let label = CrossfadingLabel()
+    @objc public let label = CrossfadingLabel()
     
     /**
      The horizontal offset of the label from a X-centered position.
      
      Positive numbers move it to the right, negative to the left.
      */
-    public var offsetFromCenterX: CGFloat = 0.0 {
+    @objc public var offsetFromCenterX: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -36,7 +36,7 @@ open class LabelButton: Button {
      
      Positive numbers move it down, negative moves up.
      */
-    public var offsetFromCenterY: CGFloat = 0.0 {
+    @objc public var offsetFromCenterY: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -47,17 +47,17 @@ open class LabelButton: Button {
     
     // MARK: - Lifecycle
     
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLabelButton()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setupLabelButton()
     }
     
-    public convenience init() {
+    @objc public convenience init() {
         self.init(frame: CGRect.zero)
     }
     
@@ -69,7 +69,7 @@ open class LabelButton: Button {
         helperSetupConstraints(isRemake: false)
     }
     
-    open override func updateConstraints() {
+    @objc open override func updateConstraints() {
         super.updateConstraints()
         helperSetupConstraints(isRemake: true)
     }
@@ -96,7 +96,7 @@ open class LabelButton: Button {
         // NOTE: Width is floating here, so the downside is if the button has a fixed size and the content is too big the label won't be truncating it properly
     }
     
-    open override var intrinsicContentSize: CGSize {
+    @objc open override var intrinsicContentSize: CGSize {
         let intrinsicSize = label.intrinsicContentSize
         let widthAccountingForOffset = intrinsicSize.width + 2.0 * abs(offsetFromCenterX)
         let heightAccountingForOffset = intrinsicSize.height + 2.0 * abs(offsetFromCenterY)

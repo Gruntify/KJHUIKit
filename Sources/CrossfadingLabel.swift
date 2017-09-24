@@ -9,16 +9,16 @@
 import UIKit
 
 /// Simple crossfading UILabel subclass.
-open class CrossfadingLabel: UILabel {
+@objc open class CrossfadingLabel: UILabel {
     
     /// The duration to perform the crossfade over.
-    open var crossfadeDuration: TimeInterval = 0.25
+    @objc open var crossfadeDuration: TimeInterval = 0.25
     
     /// Master switch to disable crossfade, which is useful in situations where the code setting the text isn't aware of some other condition, or when you'd like to temporarily make it instant but can't store the current duration and apply it later.
-    open var disableCrossfade = false
+    @objc open var disableCrossfade = false
     
     /// Set the text, with or without crossfading.
-    open func setText(_ text: String?, crossfading: Bool, completion: ((Bool) -> Void)? = nil) {
+    @objc open func setText(_ text: String?, crossfading: Bool, completion: ((Bool) -> Void)? = nil) {
         if crossfading, !disableCrossfade, crossfadeDuration > 0.0 {
             UIView.transition(with: self, duration: crossfadeDuration, options: .transitionCrossDissolve, animations: {
                 super.text = text
@@ -29,7 +29,7 @@ open class CrossfadingLabel: UILabel {
     }
     
     /// Set the attributed text, with or without crossfading.
-    open func setAttributedText(_ attributedText: NSAttributedString?, crossfading: Bool, completion: ((Bool) -> Void)? = nil) {
+    @objc open func setAttributedText(_ attributedText: NSAttributedString?, crossfading: Bool, completion: ((Bool) -> Void)? = nil) {
         if crossfading, !disableCrossfade, crossfadeDuration > 0.0 {
             UIView.transition(with: self, duration: crossfadeDuration, options: .transitionCrossDissolve, animations: {
                 super.attributedText = attributedText

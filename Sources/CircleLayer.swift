@@ -8,13 +8,13 @@
 
 import UIKit
 
-open class CircleLayer: CALayer {
+@objc open class CircleLayer: CALayer {
     
     
     // MARK: - Properties
     
     /// The colour to use when drawing the circle.
-    open var colourToUse = UIColor.white {
+    @objc open var colourToUse = UIColor.white {
         didSet  {
             self.setNeedsDisplay()
         }
@@ -24,22 +24,22 @@ open class CircleLayer: CALayer {
     
     // MARK: - Lifecycle
     
-    public override init() {
+    @objc public override init() {
         super.init()
         setupCircleLayer()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    @objc required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupCircleLayer()
     }
     
-    private func setupCircleLayer() {
+    @objc private func setupCircleLayer() {
         self.contentsScale = UIScreen.main.scale
         self.setNeedsDisplay()
     }
     
-    open override func draw(in ctx: CGContext) {
+    @objc open override func draw(in ctx: CGContext) {
         ctx.setFillColor(self.colourToUse.cgColor)
         ctx.fillEllipse(in: self.bounds)
     }

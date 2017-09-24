@@ -11,7 +11,7 @@ import SnapKit
 
 
 /// Button that contains an image and a label horizontally beside each other, with the choice of which one is on which side.
-open class HorizontalImageAndLabelButton: Button {
+@objc open class HorizontalImageAndLabelButton: Button {
     
     
     
@@ -30,12 +30,12 @@ open class HorizontalImageAndLabelButton: Button {
     /**
      The label part of the button.
      */
-    public let label = CrossfadingLabel()
+    @objc public let label = CrossfadingLabel()
     
     /**
      The image view part of the button.
      */
-    public let imageView = CrossfadingImageView()
+    @objc public let imageView = CrossfadingImageView()
     
     /**
      The layout style / ordering of the elements.
@@ -49,7 +49,7 @@ open class HorizontalImageAndLabelButton: Button {
     /**
      The spacing between the image and the label.
      */
-    public var imageToLabelSpacing: CGFloat = 0.0 {
+    @objc public var imageToLabelSpacing: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -60,7 +60,7 @@ open class HorizontalImageAndLabelButton: Button {
      
      Positive numbers move it down, negative moves up.
      */
-    public var labelCenterYOffset: CGFloat = 0.0 {
+    @objc public var labelCenterYOffset: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -71,7 +71,7 @@ open class HorizontalImageAndLabelButton: Button {
      
      Positive numbers move it down, negative moves up.
      */
-    public var imageCenterYOffset: CGFloat = 0.0 {
+    @objc public var imageCenterYOffset: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -82,7 +82,7 @@ open class HorizontalImageAndLabelButton: Button {
      
      Positive numbers move it to the right, negative to the left.
      */
-    public var combinedCenterXOffset: CGFloat = 0.0 {
+    @objc public var combinedCenterXOffset: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -125,17 +125,17 @@ open class HorizontalImageAndLabelButton: Button {
     
     // MARK: - Lifecycle
     
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupHorizontalImageAndLabelButton()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setupHorizontalImageAndLabelButton()
     }
     
-    public convenience init() {
+    @objc public convenience init() {
         self.init(frame: CGRect.zero)
     }
     
@@ -157,7 +157,7 @@ open class HorizontalImageAndLabelButton: Button {
         helperSetupConstraints(isRemake: false)
     }
     
-    open override func updateConstraints() {
+    @objc open override func updateConstraints() {
         super.updateConstraints()
         helperSetupConstraints(isRemake: true)
     }
@@ -228,7 +228,7 @@ open class HorizontalImageAndLabelButton: Button {
         // NOTE: Width is floating here, so the downside is if the button has a fixed size and the content is too big the label won't be truncating it properly because the centering layout guide's width isn't fixed to anything.
     }
     
-    open override var intrinsicContentSize: CGSize {
+    @objc open override var intrinsicContentSize: CGSize {
         let imageIntrinsicWidth = imageViewConstrainedWidth ?? imageView.intrinsicContentSize.width
         let imageIntrinsicHeight = imageViewConstrainedHeight ?? imageView.intrinsicContentSize.height
         let imageHeightAccountingForOffset = imageIntrinsicHeight + 2.0 * abs(imageCenterYOffset)
