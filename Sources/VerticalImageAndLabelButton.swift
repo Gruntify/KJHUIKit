@@ -11,7 +11,7 @@ import SnapKit
 
 
 /// Button that contains an image and a label vertically stacked, with the choice of which one is on top.
-open class VerticalImageAndLabelButton: Button {
+@objc open class VerticalImageAndLabelButton: Button {
     
     
     
@@ -30,12 +30,12 @@ open class VerticalImageAndLabelButton: Button {
     /**
      The label part of the button.
      */
-    public let label = CrossfadingLabel()
+    @objc public let label = CrossfadingLabel()
     
     /**
      The image view part of the button.
      */
-    public let imageView = CrossfadingImageView()
+    @objc public let imageView = CrossfadingImageView()
     
     /**
      The layout style / ordering of the elements.
@@ -49,7 +49,7 @@ open class VerticalImageAndLabelButton: Button {
     /**
      The spacing between the image and the label.
      */
-    public var imageToLabelSpacing: CGFloat = 0.0 {
+    @objc public var imageToLabelSpacing: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -60,7 +60,7 @@ open class VerticalImageAndLabelButton: Button {
      
      Positive numbers move it to the right, negative to the left.
      */
-    public var labelCenterXOffset: CGFloat = 0.0 {
+    @objc public var labelCenterXOffset: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -71,7 +71,7 @@ open class VerticalImageAndLabelButton: Button {
      
      Positive numbers move it to the right, negative to the left.
      */
-    public var imageCenterXOffset: CGFloat = 0.0 {
+    @objc public var imageCenterXOffset: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -82,7 +82,7 @@ open class VerticalImageAndLabelButton: Button {
      
      Positive numbers move it down, negative moves up.
      */
-    public var combinedCenterYOffset: CGFloat = 0.0 {
+    @objc public var combinedCenterYOffset: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -125,17 +125,17 @@ open class VerticalImageAndLabelButton: Button {
     
     // MARK: - Lifecycle
     
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupVerticalImageAndLabelButton()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setupVerticalImageAndLabelButton()
     }
     
-    public convenience init() {
+    @objc public convenience init() {
         self.init(frame: CGRect.zero)
     }
     
@@ -157,7 +157,7 @@ open class VerticalImageAndLabelButton: Button {
         helperSetupConstraints(isRemake: false)
     }
     
-    open override func updateConstraints() {
+    @objc open override func updateConstraints() {
         super.updateConstraints()
         helperSetupConstraints(isRemake: true)
     }
@@ -226,7 +226,7 @@ open class VerticalImageAndLabelButton: Button {
         make.width.equalTo(_centeringGuide).offset(-2.0 * abs(labelCenterXOffset))
     }
     
-    open override var intrinsicContentSize: CGSize {
+    @objc open override var intrinsicContentSize: CGSize {
         let imageIntrinsicWidth = imageViewConstrainedWidth ?? imageView.intrinsicContentSize.width
         let imageIntrinsicHeight = imageViewConstrainedHeight ?? imageView.intrinsicContentSize.height
         let imageWidthAccountingForOffset = imageIntrinsicWidth + 2.0 * abs(imageCenterXOffset)

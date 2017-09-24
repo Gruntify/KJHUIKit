@@ -13,14 +13,14 @@ import SnapKit
  
  You can swap the mode on the fly but no animation is provided by default. Subclassing and overriding imageMode property should allow you to customize to your needs.
  */
-open class ImageOrLabelButton: Button {
+@objc open class ImageOrLabelButton: Button {
 
     
     
     // MARK: - Properties
     
     /// Whether or not the button is operating in image mode, where the label will be hidden (via alpha = 0).
-    public var imageMode = false {
+    @objc public var imageMode = false {
         didSet {
             if imageMode {
                 label.alpha = 0.0
@@ -36,19 +36,19 @@ open class ImageOrLabelButton: Button {
     /**
      The image view that is centered inside the button. Alignment is centered by default.
      */
-    public let imageView = CrossfadingImageView()
+    @objc public let imageView = CrossfadingImageView()
     
     /**
      The label that is centered inside the button. Alignment is centered by default.
      */
-    public let label = CrossfadingLabel()
+    @objc public let label = CrossfadingLabel()
     
     /**
      The horizontal offset of the image from a X-centered position.
      
      Positive numbers move it to the right, negative to the left.
      */
-    public var imageOffsetFromCenterX: CGFloat = 0.0 {
+    @objc public var imageOffsetFromCenterX: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -59,7 +59,7 @@ open class ImageOrLabelButton: Button {
      
      Positive numbers move it down, negative moves up.
      */
-    public var imageOffsetFromCenterY: CGFloat = 0.0 {
+    @objc public var imageOffsetFromCenterY: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -70,7 +70,7 @@ open class ImageOrLabelButton: Button {
      
      Positive numbers move it to the right, negative to the left.
      */
-    public var labelOffsetFromCenterX: CGFloat = 0.0 {
+    @objc public var labelOffsetFromCenterX: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -81,7 +81,7 @@ open class ImageOrLabelButton: Button {
      
      Positive numbers move it down, negative moves up.
      */
-    public var labelOffsetFromCenterY: CGFloat = 0.0 {
+    @objc public var labelOffsetFromCenterY: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
         }
@@ -123,17 +123,17 @@ open class ImageOrLabelButton: Button {
     
     // MARK: - Lifecycle
     
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupImageOrLabelButton()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setupImageOrLabelButton()
     }
     
-    public convenience init() {
+    @objc public convenience init() {
         self.init(frame: CGRect.zero)
     }
     
@@ -154,7 +154,7 @@ open class ImageOrLabelButton: Button {
         helperSetupConstraints(isRemake: false)
     }
     
-    open override func updateConstraints() {
+    @objc open override func updateConstraints() {
         super.updateConstraints()
         helperSetupConstraints(isRemake: true)
     }
@@ -202,7 +202,7 @@ open class ImageOrLabelButton: Button {
         make.height.equalToSuperview().offset(-2.0 * abs(labelOffsetFromCenterY))
     }
     
-    open override var intrinsicContentSize: CGSize {
+    @objc open override var intrinsicContentSize: CGSize {
         if imageMode {
             let intrinsicWidth = imageViewConstrainedWidth ?? imageView.intrinsicContentSize.width
             let intrinsicHeight = imageViewConstrainedHeight ?? imageView.intrinsicContentSize.height

@@ -9,16 +9,16 @@
 import UIKit
 
 /// Simple crossfading UIImageView subclass.
-open class CrossfadingImageView: UIImageView {
+@objc open class CrossfadingImageView: UIImageView {
 
     /// The duration to perform the crossfade over.
-    open var crossfadeDuration: TimeInterval = 0.25
+    @objc open var crossfadeDuration: TimeInterval = 0.25
     
     /// Master switch to disable crossfade, which is useful in situations where the code setting the image isn't aware of some other condition, or when you'd like to temporarily make it instant but can't store the current duration and apply it later.
-    open var disableCrossfade = false
+    @objc open var disableCrossfade = false
 
     /// Set the image, with or without crossfading.
-    open func setImage(_ image: UIImage?, crossfading: Bool, completion: ((Bool) -> Void)? = nil) {
+    @objc open func setImage(_ image: UIImage?, crossfading: Bool, completion: ((Bool) -> Void)? = nil) {
         if crossfading, !disableCrossfade, crossfadeDuration > 0.0 {
             UIView.transition(with: self, duration: crossfadeDuration, options: .transitionCrossDissolve, animations: {
                 super.image = image

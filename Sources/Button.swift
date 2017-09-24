@@ -10,7 +10,7 @@ import UIKit
 
 
 /// Base class for buttons that come with some animation capabilities and nifty features.
-open class Button: UIControl {
+@objc open class Button: UIControl {
     public typealias TargetType = Button
     
     
@@ -30,7 +30,7 @@ open class Button: UIControl {
     public var tapAnimator: TapDownUpAnimator<UIView>?
     
     /// Whether or not to round the sides into a pill shaped button.
-    public var roundedSides = false {
+    @objc public var roundedSides = false {
         didSet {
             if roundedSides {
                 self.clipsToBounds = true
@@ -50,17 +50,17 @@ open class Button: UIControl {
     
     // MARK: - Lifecycle
     
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupButton()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setupButton()
     }
     
-    public convenience init() {
+    @objc public convenience init() {
         self.init(frame: CGRect.zero)
     }
     
@@ -68,13 +68,13 @@ open class Button: UIControl {
         self.clipsToBounds = true
     }
     
-    open override func layoutSubviews() {
+    @objc open override func layoutSubviews() {
         if roundedSides {
             self.layer.cornerRadius = self.bounds.size.height / 2.0
         }
     }
     
-    open override var intrinsicContentSize: CGSize {
+    @objc open override var intrinsicContentSize: CGSize {
         get {
             
             // Just return something that matches our touch size (subclasses will override)
@@ -89,7 +89,7 @@ open class Button: UIControl {
     
     // MARK: - Animation control
     
-    public override func stopAnimations() {
+    @objc public override func stopAnimations() {
         tapAnimator?.cancel()
         super.stopAnimations()
     }
@@ -108,7 +108,7 @@ open class Button: UIControl {
     private var _tapHoldIsFiring = false
     
     
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         switch _trackingTouch {
         case .notTracking:
             _trackingTouch = .tracking(isInside: true)
@@ -122,7 +122,7 @@ open class Button: UIControl {
         }
     }
     
-    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let firstTouch = touches.first else { return }
         switch _trackingTouch {
         case .tracking(let wasInside):
@@ -141,7 +141,7 @@ open class Button: UIControl {
         
     }
     
-    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         switch _trackingTouch {
         case .tracking(let isInside):
             tapAnimator?.doTapUpAnimation()
@@ -159,14 +159,14 @@ open class Button: UIControl {
         }
     }
     
-    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         _trackingTouch = .notTracking
         tapAnimator?.doTapUpAnimation()
         self.sendActions(for: .touchCancel)
         clearTapHoldTimer()
     }
     
-    open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    @objc open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         
         // Handle normal case (inside the visible control)
         let actuallyInside = super.point(inside: point, with: event)

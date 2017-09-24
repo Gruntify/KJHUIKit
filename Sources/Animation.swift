@@ -84,38 +84,38 @@ public protocol TapDownUpAnimatable {
 
 
 /// Protocol for views that can perform "breathe" animations - ambient animations that are cycling or ongoing.
-public protocol Breathable {
+@objc public protocol Breathable {
     
     /// Start the breathing animations
-    func startBreathing()
+    @objc func startBreathing()
     
     /// Stop the breathing animations
-    func stopBreathing()
+    @objc func stopBreathing()
     
     /// Whether or not the view is currently breathing
-    var isBreathing: Bool { get }
+    @objc var isBreathing: Bool { get }
 }
 
 
 /// Protocol for views that can perform show and hide animations.
-public protocol ShowHideable {
+@objc public protocol ShowHideable {
     
     /// Reveal the view with or without animation.
-    func show(animate: Bool, alongside: (()->())?, completion: (()->())?)
+    @objc func show(animate: Bool, alongside: (()->())?, completion: (()->())?)
     
     /// Make the view disappear with or without animation.
-    func hide(animate: Bool, alongside: (()->())?, completion: (()->())?)
+    @objc func hide(animate: Bool, alongside: (()->())?, completion: (()->())?)
     
     /// Whether or not the view is currently showing
-    var isShowing: Bool { get }
+    @objc var isShowing: Bool { get }
 }
 
 
 /// Protocol for views that can perform a brief "pulse" animation and return to normal - designed to draw attention to itself without interaction.
-public protocol Pulseable {
+@objc public protocol Pulseable {
     
     /// Perform the pulse animation.
-    func pulse(completion: (()->())?)
+    @objc func pulse(completion: (()->())?)
 }
 
 
@@ -150,7 +150,7 @@ public protocol Animator {
 public extension UIView {
     
     /// Interrupt any running animations, forcing them to halt as they currently appear (rather than completing instantly or returning to their initial state)
-    public func stopAnimations() {
+    @objc public func stopAnimations() {
         
         if let presentation = self.layer.presentation() {
             
@@ -188,7 +188,7 @@ public extension UIView {
     }
     
     /// Apply the animations as set out in an animation config
-    public func runAnimation<T: UIView>(_ animationConfig: AnimationConfig<T>, delay: TimeInterval = 0.0, completion: ((Bool)->())? = nil) {
+    public func runAnimation<T>(_ animationConfig: AnimationConfig<T>, delay: TimeInterval = 0.0, completion: ((Bool)->())? = nil) {
         guard let selfRef = self as? T else { return }
         let animations = {
             animationConfig.animations(selfRef)

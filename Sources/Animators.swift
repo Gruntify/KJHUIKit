@@ -24,16 +24,16 @@ open class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
     open var hideCurve: AnimationCurve = .spring(damping: 0.7, initialVelocity: 0.0, duration: 0.3, additive: false)
     
     /// Alpha value to set when in the showing state
-    open var showAlpha: CGFloat = 1.0
+    @objc open var showAlpha: CGFloat = 1.0
     
     /// Alpha value to set when in the hidden state
-    open var hideAlpha: CGFloat = 0.0
+    @objc open var hideAlpha: CGFloat = 0.0
     
     /// Transform to apply when in the showing state
-    open var showTransform = CGAffineTransform.identity
+    @objc open var showTransform = CGAffineTransform.identity
     
     /// Transform to apply when in the hidden state
-    open var hideTransform = CGAffineTransform(scaleX: AnimationConstants.zeroScale, y: AnimationConstants.zeroScale)
+    @objc open var hideTransform = CGAffineTransform(scaleX: AnimationConstants.zeroScale, y: AnimationConstants.zeroScale)
     
     
     
@@ -51,7 +51,7 @@ open class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
         self.target = target
     }
     
-    open func cancel() {
+    @objc open func cancel() {
         // (nothing special to do)
     }
     
@@ -59,12 +59,12 @@ open class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
     
     // MARK: - ShowHideable
     
-    open var isShowing: Bool {
+    @objc open var isShowing: Bool {
         guard let target = self.target else { return false }
         return !target.isHidden && target.alpha > hideAlpha
     }
     
-    open func show(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    @objc open func show(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
         guard let target = self.target else {
             completion?()
             return
@@ -96,7 +96,7 @@ open class ShowHideAnimator<T: UIView>: Animator, ShowHideable {
         }
     }
     
-    open func hide(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    @objc open func hide(animate: Bool, alongside: (() -> ())? = nil, completion: (() -> ())? = nil) {
         guard let target = self.target else {
             completion?()
             return
@@ -146,7 +146,7 @@ open class BouncePulseAnimator: Animator, Pulseable {
     open var secondStageCurve: AnimationCurve = .spring(damping: 0.4, initialVelocity: 0.0, duration: 0.5, additive: true)
     
     /// Amount to either grow or shrink the target size.
-    open var scale: CGFloat = 1.1
+    @objc open var scale: CGFloat = 1.1
     
     /// The rules about how the first stage should be interrupted by the second stage. Tweaking this may help make the 2 animations feel like 1.
     open var firstStagePlayoutBehaviour: AnimationPlayoutBehaviour = .full
@@ -155,7 +155,7 @@ open class BouncePulseAnimator: Animator, Pulseable {
     
     // MARK: - Private variables
     
-    open private(set) weak var target: UIView?
+    @objc open private(set) weak var target: UIView?
     private var _shouldStop = false
     
     
@@ -164,11 +164,11 @@ open class BouncePulseAnimator: Animator, Pulseable {
     
     public typealias TargetType = UIView
     
-    public required init(target: UIView) {
+    @objc public required init(target: UIView) {
         self.target = target
     }
     
-    open func cancel() {
+    @objc open func cancel() {
         _shouldStop = true
     }
     
@@ -176,7 +176,7 @@ open class BouncePulseAnimator: Animator, Pulseable {
     
     // MARK: - Pulseable
     
-    open func pulse(completion: (() -> ())? = nil) {
+    @objc open func pulse(completion: (() -> ())? = nil) {
         guard let target = self.target else {
             completion?()
             return
@@ -234,13 +234,13 @@ open class BounceDownUpBreatheAnimator: Animator, Breathable {
     // MARK: - Properties
     
     /// The amount to grow the target by when breathing "up".
-    open var growthFactor: CGFloat = 1.07
+    @objc open var growthFactor: CGFloat = 1.07
     
     /// The amount to shrink the target by when breathing "down".
-    open var shrinkFactor: CGFloat = 0.93
+    @objc open var shrinkFactor: CGFloat = 0.93
     
     /// Whether or not to start the cycle via the grow/up stage.
-    open var startWithGrowth = false
+    @objc open var startWithGrowth = false
     
     /// The curve to apply when running the "up" animation.
     open var scaleUpAnimationCurve: AnimationCurve = .easing(curve: .easeInOut, duration: 1.75, additive: true)
@@ -263,11 +263,11 @@ open class BounceDownUpBreatheAnimator: Animator, Breathable {
     
     public typealias TargetType = UIView
     
-    public required init(target: UIView) {
+    @objc public required init(target: UIView) {
         self.target = target
     }
     
-    open func cancel() {
+    @objc open func cancel() {
         stopBreathing()
     }
     
@@ -276,10 +276,10 @@ open class BounceDownUpBreatheAnimator: Animator, Breathable {
     // MARK: - Breathable
     
     /// Whether or not the view is currently breathing
-    open private(set) var isBreathing = false
+    @objc open private(set) var isBreathing = false
     
     /// Start the breathing animations
-    open func startBreathing() {
+    @objc open func startBreathing() {
         guard !isBreathing else { return }
         isBreathing = true
         setupConfigs()
@@ -287,7 +287,7 @@ open class BounceDownUpBreatheAnimator: Animator, Breathable {
     }
     
     /// Stop the breathing animations
-    open func stopBreathing() {
+    @objc open func stopBreathing() {
         guard isBreathing else { return }
         isBreathing = false
         
@@ -377,7 +377,7 @@ open class TapDownUpAnimator<T: UIView>: Animator {
         self.target = target
     }
     
-    open func cancel() {
+    @objc open func cancel() {
         preventDelayedTapUpAnimationIfApplicable()
     }
     
@@ -409,23 +409,23 @@ open class TapDownUpAnimator<T: UIView>: Animator {
         _secondaryTapUpStates.append(AnimationConfig(curve: curve, animations: animations))
     }
     
-    open func beforeTapDownAnimation(do closure: @escaping ()->()) {
+    @objc open func beforeTapDownAnimation(do closure: @escaping ()->()) {
         _beforeTapDown = closure
     }
     
-    open func beforeTapUpAnimation(do closure: @escaping ()->()) {
+    @objc open func beforeTapUpAnimation(do closure: @escaping ()->()) {
         _beforeTapUp = closure
     }
     
-    open func afterTapDownAnimation(do closure: @escaping ()->()) {
+    @objc open func afterTapDownAnimation(do closure: @escaping ()->()) {
         _afterTapDown = closure
     }
     
-    open func afterTapUpAnimation(do closure: @escaping ()->()) {
+    @objc open func afterTapUpAnimation(do closure: @escaping ()->()) {
         _afterTapUp = closure
     }
     
-    open func doTapDownAnimation() {
+    @objc open func doTapDownAnimation() {
         guard !_tapDownAnimationRunning, let target = self.target else { return }
         _beforeTapDown?()
         preventDelayedTapUpAnimationIfApplicable()

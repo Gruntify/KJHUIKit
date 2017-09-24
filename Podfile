@@ -5,5 +5,5 @@ use_frameworks!
 
 target 'KJHUIKit-iOS' do  
     platform :ios, '9.0'
-    pod 'SnapKit', '~> 3.2'
+    pod 'SnapKit', '~> 4.0.0'
 end
