@@ -26,7 +26,7 @@ import UIKit
      */
     @objc public var offsetFromCenterX: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
             self.setNeedsLayout()
         }
     }
@@ -38,7 +38,7 @@ import UIKit
      */
     @objc public var offsetFromCenterY: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
             self.setNeedsLayout()
         }
     }
@@ -50,7 +50,7 @@ import UIKit
      */
     public var imageViewConstrainedSize: CGSize? = nil {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
             self.setNeedsLayout()
         }
     }

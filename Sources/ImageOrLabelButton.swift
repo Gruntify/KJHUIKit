@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import SnapKit
 
 /** Button that can either be an image or a label.
  
  You can swap the mode on the fly but no animation is provided by default. Subclassing and overriding imageMode property should allow you to customize to your needs.
  */
 @objc open class ImageOrLabelButton: Button {
-
+    
     
     
     // MARK: - Properties
@@ -29,7 +28,8 @@ import SnapKit
                 label.alpha = 1.0
                 imageView.alpha = 0.0
             }
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -50,7 +50,8 @@ import SnapKit
      */
     @objc public var imageOffsetFromCenterX: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -61,7 +62,8 @@ import SnapKit
      */
     @objc public var imageOffsetFromCenterY: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -72,7 +74,8 @@ import SnapKit
      */
     @objc public var labelOffsetFromCenterX: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -83,7 +86,8 @@ import SnapKit
      */
     @objc public var labelOffsetFromCenterY: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -94,7 +98,8 @@ import SnapKit
      */
     public var imageViewConstrainedSize: CGSize? = nil {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -117,7 +122,7 @@ import SnapKit
             return nil
         }
     }
-
+    
     
     
     
@@ -150,56 +155,17 @@ import SnapKit
         label.textAlignment = .center
         self.addSubview(label)
         
-        // Setup constraints
-        helperSetupConstraints(isRemake: false)
+        helperSetFrames()
     }
     
-    @objc open override func updateConstraints() {
-        super.updateConstraints()
-        helperSetupConstraints(isRemake: true)
+    @objc open override func layoutSubviews() {
+        super.layoutSubviews()
+        helperSetFrames()
     }
     
-    private func helperSetupConstraints(isRemake: Bool) {
-        
-        if isRemake {
-            imageView.snp.removeConstraints()
-            label.snp.removeConstraints()
-        }
-        if imageMode {
-            imageView.snp.makeConstraints { (make) in
-                imageConstraintHelper(make)
-            }
-        } else {
-            label.snp.makeConstraints { (make) in
-                labelConstraintHelper(make)
-            }
-        }
-    }
-    
-    private func imageConstraintHelper(_ make: ConstraintMaker) {
-        make.centerX.equalToSuperview().offset(imageOffsetFromCenterX)
-        make.centerY.equalToSuperview().offset(imageOffsetFromCenterY)
-        
-        // NOTE: The 2x is to ensure that we don't cut off the content despite the offset (the offset is in one direction but view size grows in both at the same time, so it has to be double or it will be clipped).
-        if let customWidth = imageViewConstrainedWidth {
-            make.width.equalTo(customWidth)
-        } else {
-            make.width.equalToSuperview().offset(-2.0 * abs(imageOffsetFromCenterX))
-        }
-        if let customHeight = imageViewConstrainedHeight {
-            make.height.equalTo(customHeight)
-        } else {
-            make.height.equalToSuperview().offset(-2.0 * abs(imageOffsetFromCenterY))
-        }
-    }
-    
-    private func labelConstraintHelper(_ make: ConstraintMaker) {
-        make.centerX.equalToSuperview().offset(labelOffsetFromCenterX)
-        make.centerY.equalToSuperview().offset(labelOffsetFromCenterY)
-        
-        // NOTE: The 2x is to ensure that we don't cut off the content despite the offset (the offset is in one direction but view size grows in both at the same time, so it has to be double or it will be clipped).
-        make.width.equalToSuperview().offset(-2.0 * abs(labelOffsetFromCenterX))
-        make.height.equalToSuperview().offset(-2.0 * abs(labelOffsetFromCenterY))
+    private func helperSetFrames() {
+        label.frame = self.bounds.offsetBy(dx: labelOffsetFromCenterX, dy: labelOffsetFromCenterY)
+        imageView.frame = self.bounds.offsetBy(dx: imageOffsetFromCenterX, dy: imageOffsetFromCenterY).resizedTo(width: imageViewConstrainedWidth, height: imageViewConstrainedHeight)
     }
     
     @objc open override var intrinsicContentSize: CGSize {
