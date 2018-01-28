@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 /** View that can be shown/hidden in a drawer fashion.
  
