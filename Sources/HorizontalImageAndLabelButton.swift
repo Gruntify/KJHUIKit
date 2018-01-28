@@ -108,8 +108,6 @@ import UIKit
     
     // MARK: - Private variables
     
-    private var _centeringGuide = UILayoutGuide()
-    
     private var imageViewConstrainedWidth: CGFloat? {
         if let width = imageViewConstrainedSize?.width, width != UIViewNoIntrinsicMetric {
             return width
@@ -145,9 +143,6 @@ import UIKit
     }
     
     private func setupHorizontalImageAndLabelButton() {
-        
-        // Setup the centering layout guide
-        self.addLayoutGuide(_centeringGuide)
         
         // Setup the image view
         imageView.contentMode = .center
