@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 /// Simple image view only button
 @objc open class ImageButton: Button {
@@ -28,6 +27,7 @@ import SnapKit
     @objc public var offsetFromCenterX: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
+            self.setNeedsLayout()
         }
     }
     
@@ -39,17 +39,19 @@ import SnapKit
     @objc public var offsetFromCenterY: CGFloat = 0.0 {
         didSet {
             self.setNeedsUpdateConstraints()
+            self.setNeedsLayout()
         }
     }
     
-    /** 
+    /**
      A size to constrain the image view to, independent of the button size.
- 
+     
      This is useful if your image is bigger than you expect, but you don't want it to be flush with the size of the button (or the button has constraints which shouldn't relate to the image).
      */
     public var imageViewConstrainedSize: CGSize? = nil {
         didSet {
             self.setNeedsUpdateConstraints()
+            self.setNeedsLayout()
         }
     }
     
@@ -97,41 +99,16 @@ import SnapKit
         imageView.clipsToBounds = true
         
         addSubview(imageView)
-        helperSetupConstraints(isRemake: false)
+        helperSetImageViewFrame()
     }
     
-    @objc open override func updateConstraints() {
-        super.updateConstraints()
-        helperSetupConstraints(isRemake: true)
+    @objc open override func layoutSubviews() {
+        super.layoutSubviews()
+        helperSetImageViewFrame()
     }
     
-    private func helperSetupConstraints(isRemake: Bool) {
-        if isRemake {
-            imageView.snp.remakeConstraints { (make) in
-                constraintHelper(make)
-            }
-        } else {
-            imageView.snp.makeConstraints { (make) in
-                constraintHelper(make)
-            }
-        }
-    }
-    
-    private func constraintHelper(_ make: ConstraintMaker) {
-        make.centerX.equalToSuperview().offset(offsetFromCenterX)
-        make.centerY.equalToSuperview().offset(offsetFromCenterY)
-        
-        // NOTE: The 2x is to ensure that we don't cut off the content despite the offset (the offset is in one direction but view size grows in both at the same time, so it has to be double or it will be clipped).
-        if let customWidth = imageViewConstrainedWidth {
-            make.width.equalTo(customWidth)
-        } else {
-            make.width.equalToSuperview().offset(-2.0 * abs(offsetFromCenterX))
-        }
-        if let customHeight = imageViewConstrainedHeight {
-            make.height.equalTo(customHeight)
-        } else {
-            make.height.equalToSuperview().offset(-2.0 * abs(offsetFromCenterY))
-        }
+    private func helperSetImageViewFrame() {
+        imageView.frame = self.bounds.offsetBy(dx: offsetFromCenterX, dy: offsetFromCenterY).resizedTo(width: imageViewConstrainedWidth, height: imageViewConstrainedHeight)
     }
     
     @objc open override var intrinsicContentSize: CGSize {

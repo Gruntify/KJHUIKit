@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8902EB69201D72AD00B66FE3 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902EB68201D72AD00B66FE3 /* CGRectExtensions.swift */; };
 		89479F3F1F1AF04700EBA531 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89479F3E1F1AF04700EBA531 /* Animation.swift */; };
 		89479F411F1B032500EBA531 /* CircleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89479F401F1B032500EBA531 /* CircleLayer.swift */; };
 		89575BEB1F162BEF004F6F19 /* VerticalImageAndLabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89575BEA1F162BEF004F6F19 /* VerticalImageAndLabelButton.swift */; };
@@ -31,6 +32,7 @@
 		46431E2DF96A98B6193D1F03 /* Pods_KJHUIKit_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KJHUIKit_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB08A96C48669B7C779C74C /* Pods-KJHUIKit-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KJHUIKit-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KJHUIKit-iOS/Pods-KJHUIKit-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* KJHUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KJHUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8902EB68201D72AD00B66FE3 /* CGRectExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
 		8933C7891EB5B82A000D00A4 /* KJHUIKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KJHUIKitTests.swift; sourceTree = "<group>"; };
 		89479F3E1F1AF04700EBA531 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		89479F401F1B032500EBA531 /* CircleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLayer.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				89B5A2E91F516B860005362C /* Animators.swift */,
 				89C2B9FA1F085D5F006A8EC7 /* TapDownGestureRecognizer.swift */,
 				89FBB88A1F087B5A00ADC523 /* TapUpOutsideGestureRecognizer.swift */,
+				8902EB68201D72AD00B66FE3 /* CGRectExtensions.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				89CFB2F01F1A066200FB22AF /* ImageOrLabelButton.swift in Sources */,
 				89CD2FCE1F5B8FA000A58E29 /* SlidingDrawer.swift in Sources */,
 				89C2B9FB1F085D5F006A8EC7 /* TapDownGestureRecognizer.swift in Sources */,
+				8902EB69201D72AD00B66FE3 /* CGRectExtensions.swift in Sources */,
 				89575BEB1F162BEF004F6F19 /* VerticalImageAndLabelButton.swift in Sources */,
 				89F078BF1F077E95006AF057 /* Button.swift in Sources */,
 				89479F411F1B032500EBA531 /* CircleLayer.swift in Sources */,
