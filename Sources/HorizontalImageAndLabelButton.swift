@@ -10,7 +10,7 @@ import UIKit
 
 
 /// Button that contains an image and a label horizontally beside each other, with the choice of which one is on which side.
-@objc open class LKHorizontalImageAndLabelButton: Button {
+@objc open class HorizontalImageAndLabelButton: Button {
     
     
     
