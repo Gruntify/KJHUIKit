@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import SnapKit
 
 /// Simple label only button
 @objc open class LabelButton: Button {
     
     
     // MARK: - Properties
-
+    
     /**
      The label that is centered inside the button. Alignment is centered by default.
      */
@@ -27,7 +26,8 @@ import SnapKit
      */
     @objc public var offsetFromCenterX: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -38,7 +38,8 @@ import SnapKit
      */
     @objc public var offsetFromCenterY: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -66,34 +67,16 @@ import SnapKit
         label.textAlignment = .center
         
         addSubview(label)
-        helperSetupConstraints(isRemake: false)
+        helperSetLabelFrame()
     }
     
-    @objc open override func updateConstraints() {
-        super.updateConstraints()
-        helperSetupConstraints(isRemake: true)
+    @objc open override func layoutSubviews() {
+        super.layoutSubviews()
+        helperSetLabelFrame()
     }
     
-    private func helperSetupConstraints(isRemake: Bool) {
-        if isRemake {
-            label.snp.remakeConstraints { (make) in
-                constraintHelper(make)
-            }
-        } else {
-            label.snp.makeConstraints { (make) in
-                constraintHelper(make)
-            }
-        }
-    }
-    
-    private func constraintHelper(_ make: ConstraintMaker) {
-        make.centerX.equalToSuperview().offset(offsetFromCenterX)
-        make.centerY.equalToSuperview().offset(offsetFromCenterY)
-        
-        // NOTE: The 2x is to ensure that we don't cut off the content despite the offset (the offset is in one direction but view size grows in both at the same time, so it has to be double or it will be clipped).
-        make.height.equalToSuperview().offset(-2.0 * abs(offsetFromCenterY))
-        
-        // NOTE: Width is floating here, so the downside is if the button has a fixed size and the content is too big the label won't be truncating it properly
+    private func helperSetLabelFrame() {
+        label.frame = self.bounds.offsetBy(dx: offsetFromCenterX, dy: offsetFromCenterY)
     }
     
     @objc open override var intrinsicContentSize: CGSize {
