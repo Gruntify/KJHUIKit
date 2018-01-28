@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import SnapKit
 
 
 /// Button that contains an image and a label horizontally beside each other, with the choice of which one is on which side.
-@objc open class HorizontalImageAndLabelButton: Button {
+@objc open class LKHorizontalImageAndLabelButton: Button {
     
     
     
@@ -26,7 +25,7 @@ import SnapKit
     
     
     // MARK: - Properties
-
+    
     /**
      The label part of the button.
      */
@@ -42,16 +41,18 @@ import SnapKit
      */
     public var arrangement: ImageAndLabelArrangement = .imageLeftLabelRight {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
-
+    
     /**
      The spacing between the image and the label.
      */
     @objc public var imageToLabelSpacing: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -62,7 +63,8 @@ import SnapKit
      */
     @objc public var labelCenterYOffset: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -73,7 +75,8 @@ import SnapKit
      */
     @objc public var imageCenterYOffset: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -84,7 +87,8 @@ import SnapKit
      */
     @objc public var combinedCenterXOffset: CGFloat = 0.0 {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -95,7 +99,8 @@ import SnapKit
      */
     public var imageViewConstrainedSize: CGSize? = nil {
         didSet {
-            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
         }
     }
     
@@ -150,82 +155,69 @@ import SnapKit
         self.addSubview(imageView)
         
         // Setup the label
-        label.textAlignment = .center
+        label.textAlignment = .left
         self.addSubview(label)
         
-        // Setup constraints
-        helperSetupConstraints(isRemake: false)
+        helperSetFrames()
     }
     
-    @objc open override func updateConstraints() {
-        super.updateConstraints()
-        helperSetupConstraints(isRemake: true)
+    @objc open override func layoutSubviews() {
+        super.layoutSubviews()
+        helperSetFrames()
     }
     
-    private func helperSetupConstraints(isRemake: Bool) {
-        if isRemake {
-            _centeringGuide.snp.remakeConstraints { (make) in
-                centerConstraintHelper(make)
-            }
-            imageView.snp.remakeConstraints { (make) in
-                imageConstraintHelper(make)
-            }
-            label.snp.remakeConstraints { (make) in
-                labelConstraintHelper(make)
-            }
+    private func helperSetFrames() {
+        var imageRect: CGRect
+        var labelRect: CGRect
+        let labelIntrinsic = label.intrinsicContentSize
+        let imageIntrinsic = imageView.intrinsicContentSize
+        
+        // Determine the size that things want to be
+        let imageWidth: CGFloat
+        let imageHeight: CGFloat
+        if let custom = imageViewConstrainedWidth {
+            imageWidth = custom
         } else {
-            _centeringGuide.snp.makeConstraints { (make) in
-                centerConstraintHelper(make)
-            }
-            imageView.snp.makeConstraints { (make) in
-                imageConstraintHelper(make)
-            }
-            label.snp.makeConstraints { (make) in
-                labelConstraintHelper(make)
-            }
+            imageWidth = imageIntrinsic.width
         }
-    }
-    
-    private func centerConstraintHelper(_ make: ConstraintMaker) {
-        make.centerY.equalToSuperview()
-        make.centerX.equalToSuperview().offset(combinedCenterXOffset)
-    }
-    
-    private func imageConstraintHelper(_ make: ConstraintMaker) {
+        if let custom = imageViewConstrainedHeight {
+            imageHeight = custom
+        } else {
+            imageHeight = imageIntrinsic.height
+        }
+        var labelWidth = labelIntrinsic.width // var so it can truncate if too big
+        let labelHeight = labelIntrinsic.height
+        
+        // Determine where the items sit vertically
+        let mid = self.bounds.height / 2.0
+        let labelY = mid + labelCenterYOffset - labelHeight / 2.0
+        let imageY = mid + imageCenterYOffset - imageHeight / 2.0
+        let rightEdge: CGFloat
+        
+        // Do the main positioning
+        // NOTE: during imperfect scenarios the image is favouring being the natural size or the requested size rather than fitting into the current frame, choosing to avoid aspect problems. Label is the reverse, opting to use the available space so it benefits from truncation.
         switch arrangement {
         case .imageLeftLabelRight:
-            make.leading.equalTo(_centeringGuide)
+            imageRect = CGRect(x: combinedCenterXOffset, y: imageY, width: imageWidth, height: imageHeight)
+            let labelX = combinedCenterXOffset + imageRect.width + imageToLabelSpacing
+            let remainingSpace = max(0, self.bounds.width - labelX)
+            labelWidth = (labelIntrinsic.width < remainingSpace) ? labelIntrinsic.width : remainingSpace
+            labelRect = CGRect(x: labelX, y: labelY, width: labelWidth, height: labelHeight)
+            rightEdge = labelRect.origin.x + labelRect.width
         case .imageRightLabelLeft:
-            make.trailing.equalTo(_centeringGuide)
+            labelRect = CGRect(x: combinedCenterXOffset, y: labelY, width: labelWidth, height: labelHeight)
+            let imageX = combinedCenterXOffset + labelRect.width + imageToLabelSpacing
+            imageRect = CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight)
+            rightEdge = imageRect.origin.x + imageRect.width
         }
-        make.centerY.equalTo(_centeringGuide).offset(imageCenterYOffset)
         
-        // NOTE: The 2x is to ensure that we don't cut off the content despite the offset (the offset is in one direction but view size grows in both at the same time, so it has to be double or it will be clipped).
-        if let customWidth = imageViewConstrainedWidth {
-            make.width.equalTo(customWidth)
-        }
-        if let customHeight = imageViewConstrainedHeight {
-            make.height.equalTo(customHeight)
-        } else {
-            make.height.equalTo(_centeringGuide).offset(-2.0 * abs(imageCenterYOffset))
-        }
-    }
-    
-    private func labelConstraintHelper(_ make: ConstraintMaker) {
-        switch arrangement {
-        case .imageLeftLabelRight:
-            make.trailing.equalTo(_centeringGuide)
-            make.leading.equalTo(imageView.snp.trailing).offset(imageToLabelSpacing)
-        case .imageRightLabelLeft:
-            make.leading.equalTo(_centeringGuide)
-            make.trailing.equalTo(imageView.snp.leading).offset(-imageToLabelSpacing)
-        }
-        make.centerY.equalTo(_centeringGuide).offset(labelCenterYOffset)
+        // Adjust horizontally if needed when there's excess space
+        let excessDiv2 = max(0, (self.bounds.width - rightEdge) / 2.0)
+        labelRect.origin.x += excessDiv2
+        imageRect.origin.x += excessDiv2
         
-        // NOTE: The 2x is to ensure that we don't cut off the content despite the offset (the offset is in one direction but view size grows in both at the same time, so it has to be double or it will be clipped).
-        make.height.equalTo(_centeringGuide).offset(-2.0 * abs(labelCenterYOffset))
-        
-        // NOTE: Width is floating here, so the downside is if the button has a fixed size and the content is too big the label won't be truncating it properly because the centering layout guide's width isn't fixed to anything.
+        label.frame = labelRect
+        imageView.frame = imageRect
     }
     
     @objc open override var intrinsicContentSize: CGSize {
