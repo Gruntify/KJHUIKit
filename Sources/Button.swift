@@ -69,6 +69,7 @@ import UIKit
     }
     
     @objc open override func layoutSubviews() {
+        super.layoutSubviews()
         if roundedSides {
             self.layer.cornerRadius = self.bounds.size.height / 2.0
         }
