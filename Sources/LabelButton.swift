@@ -76,7 +76,11 @@ import UIKit
     }
     
     private func helperSetLabelFrame() {
-        label.frame = self.bounds.offsetBy(dx: offsetFromCenterX, dy: offsetFromCenterY)
+        let size = label.intrinsicContentSize
+        let width = min(size.width, self.bounds.width)
+        let height = min(size.height, self.bounds.height)
+        let newFrame = self.bounds.resizedTo(width: width, height: height)
+        label.frame = newFrame.offsetBy(dx: offsetFromCenterX, dy: offsetFromCenterY)
     }
     
     @objc open override var intrinsicContentSize: CGSize {
