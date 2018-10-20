@@ -86,16 +86,16 @@ import SnapKit
         switch direction {
         case .fromBottom, .fromTop:
             if isShowing {
-                return CGSize(width: UIViewNoIntrinsicMetric, height: size)
+                return CGSize(width: UIView.noIntrinsicMetric, height: size)
             } else {
-                return CGSize(width: UIViewNoIntrinsicMetric, height: 0.0)
+                return CGSize(width: UIView.noIntrinsicMetric, height: 0.0)
             }
             
         case .fromLeft, .fromRight:
             if isShowing {
-                return CGSize(width: size, height: UIViewNoIntrinsicMetric)
+                return CGSize(width: size, height: UIView.noIntrinsicMetric)
             } else {
-                return CGSize(width: 0.0, height: UIViewNoIntrinsicMetric)
+                return CGSize(width: 0.0, height: UIView.noIntrinsicMetric)
             }
         }
     }

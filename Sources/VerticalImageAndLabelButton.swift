@@ -109,7 +109,7 @@ import UIKit
     // MARK: - Private variables
     
     private var imageViewConstrainedWidth: CGFloat? {
-        if let width = imageViewConstrainedSize?.width, width != UIViewNoIntrinsicMetric {
+        if let width = imageViewConstrainedSize?.width, width != UIView.noIntrinsicMetric {
             return width
         } else {
             return nil
@@ -117,7 +117,7 @@ import UIKit
     }
     
     private var imageViewConstrainedHeight: CGFloat? {
-        if let height = imageViewConstrainedSize?.height, height != UIViewNoIntrinsicMetric {
+        if let height = imageViewConstrainedSize?.height, height != UIView.noIntrinsicMetric {
             return height
         } else {
             return nil

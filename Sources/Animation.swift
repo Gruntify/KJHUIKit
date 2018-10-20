@@ -14,7 +14,7 @@ public typealias ViewAnimation<T: UIView> = (T) -> Void
 
 /// Describer of the timing and nature of an animation.
 public enum AnimationCurve {
-    case easing(curve: UIViewAnimationCurve, duration: TimeInterval, additive: Bool)
+    case easing(curve: UIView.AnimationCurve, duration: TimeInterval, additive: Bool)
     case spring(damping: CGFloat, initialVelocity: CGFloat, duration: TimeInterval, additive: Bool)
 }
 
@@ -201,7 +201,7 @@ public extension UIView {
                 stopAnimations()
             }
             
-            var translatedCurve: UIViewAnimationOptions
+            var translatedCurve: UIView.AnimationOptions
             switch curve {
             case .easeIn:
                 translatedCurve = .curveEaseIn
