@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KJHUIKit"
-  s.version      = "0.11.0"
+  s.version      = "0.10.0"
   s.summary      = "A handy set of views and buttons for iOS"
   s.homepage     = "https://github.com/KieranHarper/KJHUIKit.git"
   s.license      = { :type => "MIT", :file => "LICENSE" }
