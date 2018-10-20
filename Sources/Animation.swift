@@ -135,8 +135,8 @@ public protocol Animator {
     /// The view subclass the animator knows how to deal with (UIView may be sufficient).
     associatedtype TargetType: UIView
     
-    /// The target view to animate.
-    weak var target: TargetType? { get }
+    /// The target view to animate. Should be weakly held!
+    var target: TargetType? { get }
     
     /// Initialise with a target view to animate.
     init(target: TargetType)

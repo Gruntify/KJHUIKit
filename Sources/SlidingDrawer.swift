@@ -46,10 +46,10 @@ import SnapKit
     }
     
     /// Animation curve to use when opening the drawer.
-    public var showCurve: AnimationCurve = .spring(damping: 0.5, initialVelocity: 0.0, duration: 0.5, additive: true)
+    public var showCurve: KJHUIKit.AnimationCurve = .spring(damping: 0.5, initialVelocity: 0.0, duration: 0.5, additive: true)
     
     /// Animation curve to use when closing the drawer.
-    public var hideCurve: AnimationCurve = .spring(damping: 0.7, initialVelocity: 0.0, duration: 0.35, additive: true)
+    public var hideCurve: KJHUIKit.AnimationCurve = .spring(damping: 0.7, initialVelocity: 0.0, duration: 0.35, additive: true)
     
     
     
