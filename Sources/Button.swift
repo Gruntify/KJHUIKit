@@ -46,6 +46,9 @@ import UIKit
     /// The behaviour mechanics of tap hold detection, if desired.
     public var tapHoldBehaviour: TapHoldBehaviour = .none
     
+    /// The size for touches to be considered inside, regardless of the constrained size. Defaults to 44.
+    public var inflatedTouchSize: CGFloat = 44
+    
     
     
     // MARK: - Lifecycle
@@ -180,8 +183,8 @@ import UIKit
         let transformedPoint = point.applying(scaleCompensate)
         
         // Inflate the bounds to the minimum and see if it's inside
-        let minWidth: CGFloat = 44.0
-        let minHeight: CGFloat = 44.0
+        let minWidth: CGFloat = inflatedTouchSize
+        let minHeight: CGFloat = inflatedTouchSize
         let extraWidth = max(0, minWidth - self.bounds.size.width)
         let extraHeight = max(0, minHeight - self.bounds.size.height)
         let area = self.bounds.insetBy(dx: -extraWidth/2, dy: -extraHeight/2)
